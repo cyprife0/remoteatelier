@@ -1,0 +1,2428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes" />
+  <title>RemoteAtelier - Cold Calling Training</title>
+  <!-- Google Font & simple reset -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f8fafc;
+      color: #0b1a2e;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* BUTTONS */
+    .btn-primary {
+      display: inline-block;
+      background-color: #0b2b4a;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 16px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(11, 43, 74, 0.2);
+    }
+    .btn-primary:hover {
+      background-color: #1a3f5f;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(11, 43, 74, 0.3);
+    }
+    .btn-primary:focus-visible {
+      outline: 2px solid #0b2b4a;
+      outline-offset: 3px;
+    }
+
+    .btn-outline {
+      display: inline-block;
+      background-color: transparent;
+      color: #0b2b4a;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 14px 36px;
+      border-radius: 50px;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      border: 2px solid #0b2b4a;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-outline:hover {
+      background-color: #0b2b4a;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(11, 43, 74, 0.15);
+    }
+
+    .btn-back {
+      display: inline-block;
+      background-color: transparent;
+      color: #0b2b4a;
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 8px 16px;
+      border-radius: 50px;
+      text-decoration: none;
+      border: 1px solid #d0d9e5;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: 16px;
+    }
+    .btn-back:hover {
+      background-color: #f1f6fa;
+      border-color: #0b2b4a;
+      transform: translateX(-4px);
+    }
+    .btn-back::before {
+      content: '← ';
+    }
+
+    /* LANDING PAGE */
+    .landing {
+      background: white;
+      display: block;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      padding: 16px 0;
+      background: white;
+      border-bottom: 1px solid #f0f2f5;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.98);
+    }
+    .navbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #0b2b4a;
+      letter-spacing: -0.5px;
+    }
+    .logo span {
+      color: #2d6a9f;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #1e3a5f;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: #0b2b4a;
+    }
+
+    /* Mobile Menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 28px;
+      height: 3px;
+      background: #0b2b4a;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 6px);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -6px);
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: white;
+      padding: 20px 24px;
+      border-bottom: 1px solid #f0f2f5;
+      gap: 16px;
+    }
+    .mobile-menu a {
+      text-decoration: none;
+      color: #1e3a5f;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f2f5;
+    }
+    .mobile-menu a:last-child {
+      border-bottom: none;
+    }
+    .mobile-menu .btn-primary {
+      text-align: center;
+      padding: 12px;
+      font-size: 0.95rem;
+    }
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 60px 0 50px;
+      background: linear-gradient(135deg, #f8fafc 0%, #e8edf5 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(11, 43, 74, 0.05) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-content {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-text {
+      flex: 1;
+    }
+    .hero-text .badge {
+      display: inline-block;
+      background: rgba(11, 43, 74, 0.1);
+      color: #0b2b4a;
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero-text h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      color: #0b1a2e;
+    }
+    .hero-text h1 span {
+      color: #2d6a9f;
+      position: relative;
+    }
+    .hero-text h1 span::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: #2d6a9f;
+      opacity: 0.3;
+      border-radius: 2px;
+    }
+    .hero-text p {
+      font-size: 1.2rem;
+      max-width: 550px;
+      color: #2c405a;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .hero-image {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-image .illustration {
+      width: 100%;
+      max-width: 480px;
+      background: white;
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(11, 43, 74, 0.08);
+      border: 1px solid rgba(11, 43, 74, 0.06);
+      text-align: center;
+    }
+    .hero-image .illustration .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .hero-image .illustration .icon-item {
+      background: #f1f6fa;
+      padding: 20px 12px;
+      border-radius: 16px;
+      font-size: 2.2rem;
+      transition: transform 0.3s;
+    }
+    .hero-image .illustration .icon-item:hover {
+      transform: translateY(-4px);
+    }
+    .hero-image .illustration .icon-item span {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #1e3a5f;
+      margin-top: 8px;
+    }
+    .hero-image .illustration p {
+      font-weight: 600;
+      color: #0b2b4a;
+      font-size: 0.95rem;
+    }
+
+    /* STATS */
+    .stats {
+      padding: 40px 0;
+      background: white;
+      border-bottom: 1px solid #f0f2f5;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      text-align: center;
+    }
+    .stats-grid .stat-item h3 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #0b2b4a;
+    }
+    .stats-grid .stat-item p {
+      color: #4a5f7a;
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    /* sections */
+    .section {
+      padding: 80px 0;
+      border-bottom: 1px solid #f0f2f5;
+    }
+    .section:last-of-type {
+      border-bottom: none;
+    }
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 50px;
+    }
+    .section-header .tag {
+      display: inline-block;
+      background: rgba(11, 43, 74, 0.08);
+      color: #0b2b4a;
+      padding: 4px 14px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .section-header h2 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #0b1a2e;
+    }
+    .section-header p {
+      color: #2c405a;
+      font-size: 1.05rem;
+      margin-top: 12px;
+    }
+
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    .grid-2col {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+
+    .feature-card {
+      background: white;
+      padding: 32px 28px;
+      border-radius: 20px;
+      border: 1px solid #f0f2f5;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(11, 43, 74, 0.06);
+      border-color: #dde4ec;
+    }
+    .feature-card .icon {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+    }
+    .feature-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #0b1a2e;
+    }
+    .feature-card p {
+      color: #4a5f7a;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .list-bullet {
+      list-style: none;
+      margin-top: 10px;
+    }
+    .list-bullet li {
+      padding: 8px 0 8px 32px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%230b2b4a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>') left center no-repeat;
+      background-size: 20px;
+      font-weight: 500;
+      color: #1e3a5f;
+    }
+
+    .req-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .req-item {
+      background: #f1f6fa;
+      padding: 24px 20px;
+      border-radius: 16px;
+      text-align: center;
+      font-weight: 500;
+      color: #0b2b4a;
+      border: 1px solid transparent;
+      transition: all 0.3s;
+    }
+    .req-item:hover {
+      border-color: #0b2b4a;
+      background: white;
+    }
+    .req-item .icon {
+      font-size: 1.8rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .cta-final {
+      background: linear-gradient(135deg, #0b2b4a 0%, #1a3f5f 100%);
+      color: white;
+      border-radius: 32px;
+      padding: 60px 48px;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .cta-final h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .cta-final p {
+      font-size: 1.1rem;
+      max-width: 500px;
+      margin: 0 auto 30px;
+      opacity: 0.9;
+    }
+    .cta-final .btn-primary {
+      background: white;
+      color: #0b2b4a;
+      box-shadow: 0 4px 20px rgba(255,255,255,0.15);
+    }
+    .cta-final .btn-primary:hover {
+      background: #f0f4f8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255,255,255,0.25);
+    }
+
+    /* FOOTER */
+    .footer {
+      background: #0b1a2e;
+      color: rgba(255,255,255,0.7);
+      padding: 40px 0;
+      text-align: center;
+    }
+    .footer p {
+      font-size: 0.9rem;
+    }
+    .footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+    }
+    .footer .footer-links a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .footer .footer-links a:hover {
+      color: white;
+    }
+
+    /* ---- REGISTRATION PAGE ---- */
+    .register-page {
+      background: #f8fafc;
+      padding: 40px 0 70px;
+      display: none;
+    }
+    .register-card {
+      max-width: 820px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 32px;
+      padding: 40px 36px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.04);
+      border: 1px solid #e9edf2;
+    }
+    .register-card h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    .register-card .subhead {
+      color: #3f546e;
+      margin-bottom: 32px;
+      border-bottom: 1px solid #e9edf2;
+      padding-bottom: 20px;
+    }
+
+    .form-section {
+      margin-bottom: 36px;
+    }
+    .form-section h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 18px;
+      color: #0b1a2e;
+      border-left: 5px solid #0b2b4a;
+      padding-left: 16px;
+    }
+
+    .field-group {
+      margin-bottom: 20px;
+    }
+    .field-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 5px;
+      font-size: 0.95rem;
+      color: #1e3a5f;
+    }
+    .field-group label .required {
+      color: #dc3545;
+      margin-left: 2px;
+    }
+    .field-group label .optional {
+      color: #6b7f96;
+      font-weight: 400;
+      font-size: 0.8rem;
+      margin-left: 4px;
+    }
+    .field-group input[type="text"],
+    .field-group input[type="email"],
+    .field-group input[type="tel"],
+    .field-group input[type="number"],
+    .field-group input[type="url"],
+    .field-group select,
+    .field-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #d0d9e5;
+      border-radius: 16px;
+      font-size: 1rem;
+      background: white;
+      transition: border 0.15s;
+      font-family: 'Inter', sans-serif;
+    }
+    .field-group input:focus,
+    .field-group select:focus,
+    .field-group textarea:focus {
+      outline: none;
+      border-color: #0b2b4a;
+      box-shadow: 0 0 0 3px rgba(11,43,74,0.08);
+    }
+    .field-group input:required:invalid,
+    .field-group select:required:invalid,
+    .field-group textarea:required:invalid {
+      border-color: #dc3545;
+    }
+    .field-group input:required:valid,
+    .field-group select:required:valid,
+    .field-group textarea:required:valid {
+      border-color: #28a745;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      margin-top: 6px;
+    }
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 400;
+      font-size: 0.95rem;
+      color: #1a2c44;
+      cursor: pointer;
+    }
+    .radio-group input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #0b2b4a;
+      cursor: pointer;
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 20px;
+      margin-top: 6px;
+    }
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 400;
+      font-size: 0.95rem;
+      color: #1a2c44;
+      cursor: pointer;
+    }
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #0b2b4a;
+      cursor: pointer;
+    }
+
+    .days-checkbox-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .days-checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 400;
+      font-size: 0.95rem;
+      color: #1a2c44;
+      cursor: pointer;
+      padding: 8px 12px;
+      background: #f8fafc;
+      border-radius: 10px;
+      border: 1px solid #e9edf2;
+      transition: all 0.2s;
+    }
+    .days-checkbox-group label:hover {
+      background: #f1f6fa;
+      border-color: #0b2b4a;
+    }
+    .days-checkbox-group label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #0b2b4a;
+      cursor: pointer;
+    }
+
+    .inline-info {
+      background: #f1f5f9;
+      padding: 18px 20px;
+      border-radius: 20px;
+      margin: 18px 0 12px;
+      font-size: 0.95rem;
+      border-left: 4px solid #0b2b4a;
+    }
+    .inline-info strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .upload-area {
+      border: 2px dashed #cdd7e3;
+      border-radius: 20px;
+      padding: 18px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.15s;
+      background: #fafcff;
+    }
+    .upload-area:hover {
+      background: #f1f6fe;
+    }
+    .upload-area input[type="file"] {
+      width: 100%;
+      padding: 10px 0;
+      cursor: pointer;
+    }
+
+    .register-btn {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.2rem;
+      border-radius: 60px;
+      margin-top: 16px;
+      font-weight: 600;
+      background: #0b2b4a;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .register-btn:hover {
+      background: #1a3f5f;
+    }
+    .register-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    /* ---- LOADING PAGE ---- */
+    .loading-page {
+      display: none;
+      min-height: 100vh;
+      background: #f8fafc;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .loading-card {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 32px;
+      padding: 60px 40px;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+      border: 1px solid #e9edf2;
+    }
+    .loading-spinner {
+      width: 60px;
+      height: 60px;
+      border: 4px solid #e9edf2;
+      border-top: 4px solid #0b2b4a;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 24px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .loading-card h2 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #0b1a2e;
+    }
+    .loading-card p {
+      color: #405973;
+      font-size: 1rem;
+    }
+    .loading-progress {
+      width: 100%;
+      height: 4px;
+      background: #e9edf2;
+      border-radius: 4px;
+      margin-top: 24px;
+      overflow: hidden;
+    }
+    .loading-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #0b2b4a;
+      border-radius: 4px;
+      animation: progress 5s ease-in-out forwards;
+    }
+    @keyframes progress {
+      0% { width: 0%; }
+      20% { width: 20%; }
+      40% { width: 45%; }
+      60% { width: 70%; }
+      80% { width: 88%; }
+      100% { width: 100%; }
+    }
+
+    /* ---- CONFIRMATION PAGE ---- */
+    .confirmation-page {
+      display: none;
+      min-height: 70vh;
+      background: #f8fafc;
+      padding: 60px 0;
+      align-items: center;
+      justify-content: center;
+    }
+    .confirmation-card {
+      max-width: 620px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 32px;
+      padding: 50px 40px;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+      border: 1px solid #e9edf2;
+    }
+    .confirmation-card .check-icon {
+      font-size: 4rem;
+      background: #e6f0f5;
+      width: 90px;
+      height: 90px;
+      line-height: 90px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      color: #0b2b4a;
+    }
+    .confirmation-card h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #0b1a2e;
+    }
+    .confirmation-card p {
+      color: #2c405a;
+      font-size: 1.05rem;
+      max-width: 480px;
+      margin: 0 auto 16px;
+      line-height: 1.6;
+    }
+    .confirmation-card .thank-you {
+      font-weight: 600;
+      color: #0b2b4a;
+      margin-top: 8px;
+      font-size: 1.1rem;
+    }
+    .confirmation-card .btn-primary {
+      background: #0b2b4a;
+      color: white;
+      margin-top: 16px;
+    }
+    .confirmation-card .btn-primary:hover {
+      background: #1a3f5f;
+    }
+
+    /* spinner for button */
+    .spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 0.8s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    .btn-loading {
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    /* Voice note instructions */
+    .voice-note-instructions {
+      background: #f8fafc;
+      padding: 16px 20px;
+      border-radius: 16px;
+      margin: 8px 0 12px;
+      border: 1px solid #e9edf2;
+    }
+    .voice-note-instructions ol {
+      padding-left: 20px;
+      margin: 8px 0;
+    }
+    .voice-note-instructions ol li {
+      margin-bottom: 4px;
+      color: #1e3a5f;
+    }
+    .voice-note-instructions .vocaroo-link {
+      display: inline-block;
+      color: #0b2b4a;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 4px 0;
+      border-bottom: 2px solid #0b2b4a;
+    }
+    .voice-note-instructions .vocaroo-link:hover {
+      color: #1a3f5f;
+    }
+
+    /* ---- CHATBOT ---- */
+    .chatbot-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1000;
+    }
+
+    .chatbot-toggle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #0b2b4a;
+      color: white;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(11, 43, 74, 0.3);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .chatbot-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px rgba(11, 43, 74, 0.4);
+    }
+    .chatbot-toggle .close-icon {
+      display: none;
+    }
+    .chatbot-toggle.active .chat-icon {
+      display: none;
+    }
+    .chatbot-toggle.active .close-icon {
+      display: inline;
+    }
+
+    .chatbot-window {
+      position: fixed;
+      bottom: 100px;
+      right: 24px;
+      width: 380px;
+      max-width: calc(100vw - 48px);
+      height: 500px;
+      max-height: calc(100vh - 180px);
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid #e9edf2;
+      animation: slideUp 0.3s ease;
+    }
+    .chatbot-window.open {
+      display: flex;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .chatbot-header {
+      background: #0b2b4a;
+      color: white;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .chatbot-header h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .chatbot-header h3 .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .chatbot-header .minimize-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .chatbot-header .minimize-btn:hover {
+      opacity: 1;
+    }
+
+    .chatbot-messages {
+      flex: 1;
+      padding: 16px 20px;
+      overflow-y: auto;
+      background: #f8fafc;
+    }
+    .chatbot-messages::-webkit-scrollbar {
+      width: 4px;
+    }
+    .chatbot-messages::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .chatbot-messages::-webkit-scrollbar-thumb {
+      background: #d0d9e5;
+      border-radius: 4px;
+    }
+
+    .message {
+      margin-bottom: 12px;
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 16px;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      animation: messageIn 0.3s ease;
+    }
+    @keyframes messageIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .message.bot {
+      background: white;
+      color: #0b1a2e;
+      border: 1px solid #e9edf2;
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+    .message.user {
+      background: #0b2b4a;
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+      margin-left: auto;
+    }
+
+    .chatbot-messages {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .quick-replies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 8px 20px 12px;
+      background: #f8fafc;
+      border-top: 1px solid #e9edf2;
+      flex-shrink: 0;
+    }
+    .quick-replies button {
+      background: white;
+      border: 1px solid #d0d9e5;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      color: #0b2b4a;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .quick-replies button:hover {
+      background: #f1f6fa;
+      border-color: #0b2b4a;
+    }
+
+    .chatbot-input {
+      display: flex;
+      padding: 12px 16px;
+      background: white;
+      border-top: 1px solid #e9edf2;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .chatbot-input input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid #d0d9e5;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .chatbot-input input:focus {
+      border-color: #0b2b4a;
+      box-shadow: 0 0 0 3px rgba(11, 43, 74, 0.08);
+    }
+    .chatbot-input button {
+      background: #0b2b4a;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .chatbot-input button:hover {
+      background: #1a3f5f;
+    }
+
+    .typing-indicator {
+      display: none;
+      padding: 8px 14px;
+      background: white;
+      border: 1px solid #e9edf2;
+      border-radius: 16px;
+      border-bottom-left-radius: 4px;
+      align-self: flex-start;
+      margin-bottom: 12px;
+    }
+    .typing-indicator.show {
+      display: inline-block;
+    }
+    .typing-indicator span {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: #a0b4c8;
+      border-radius: 50%;
+      margin: 0 2px;
+      animation: typing 1.4s infinite;
+    }
+    .typing-indicator span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    .typing-indicator span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-6px); opacity: 1; }
+    }
+
+    @media (max-width: 480px) {
+      .chatbot-window {
+        right: 12px;
+        bottom: 90px;
+        width: calc(100vw - 24px);
+        height: 70vh;
+        max-height: calc(100vh - 160px);
+      }
+      .chatbot-toggle {
+        width: 54px;
+        height: 54px;
+        font-size: 24px;
+      }
+    }
+
+    /* ---- RESPONSIVE DESIGN ---- */
+    @media (max-width: 1024px) {
+      .hero-text h1 {
+        font-size: 2.6rem;
+      }
+      .grid-3col {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .req-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      /* Mobile Nav */
+      .nav-links {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+      .navbar .btn-primary {
+        display: none;
+      }
+
+      .hero {
+        padding: 40px 0 30px;
+      }
+      .hero-content {
+        flex-direction: column;
+        gap: 30px;
+      }
+      .hero-text {
+        text-align: center;
+      }
+      .hero-text h1 {
+        font-size: 2rem;
+      }
+      .hero-text p {
+        font-size: 1rem;
+        max-width: 100%;
+        margin: 0 auto 24px;
+      }
+      .hero-buttons {
+        justify-content: center;
+      }
+      .hero-buttons .btn-primary,
+      .hero-buttons .btn-outline {
+        padding: 12px 28px;
+        font-size: 0.9rem;
+      }
+      .hero-image .illustration {
+        padding: 20px;
+        max-width: 100%;
+      }
+      .hero-image .illustration .icon-grid {
+        gap: 10px;
+      }
+      .hero-image .illustration .icon-item {
+        padding: 12px 8px;
+        font-size: 1.6rem;
+      }
+      .hero-image .illustration .icon-item span {
+        font-size: 0.6rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .stats-grid .stat-item h3 {
+        font-size: 1.6rem;
+      }
+
+      .grid-3col {
+        grid-template-columns: 1fr;
+      }
+      .grid-2col {
+        grid-template-columns: 1fr;
+      }
+      .req-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 40px 0;
+      }
+      .section-header h2 {
+        font-size: 1.6rem;
+      }
+      .section-header p {
+        font-size: 0.95rem;
+      }
+
+      .feature-card {
+        padding: 24px 20px;
+      }
+      .feature-card .icon {
+        font-size: 1.8rem;
+      }
+
+      .cta-final {
+        padding: 30px 20px;
+      }
+      .cta-final h2 {
+        font-size: 1.5rem;
+      }
+      .cta-final p {
+        font-size: 1rem;
+      }
+      .cta-final .btn-primary {
+        padding: 14px 32px;
+        font-size: 0.95rem;
+      }
+
+      .register-card {
+        padding: 20px 16px;
+      }
+      .register-card h1 {
+        font-size: 1.6rem;
+      }
+      .register-card .subhead {
+        font-size: 0.95rem;
+      }
+
+      .form-section h2 {
+        font-size: 1.1rem;
+        padding-left: 12px;
+      }
+
+      .radio-group {
+        gap: 8px 16px;
+      }
+      .checkbox-group {
+        gap: 8px 12px;
+      }
+      .days-checkbox-group {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      }
+
+      .inline-info {
+        padding: 14px 16px;
+        font-size: 0.9rem;
+      }
+
+      .register-btn {
+        font-size: 1rem;
+        padding: 14px;
+      }
+
+      .confirmation-card {
+        padding: 30px 20px;
+      }
+      .confirmation-card h2 {
+        font-size: 1.5rem;
+      }
+      .confirmation-card p {
+        font-size: 0.95rem;
+      }
+
+      .footer .footer-links {
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 16px;
+      }
+
+      .hero-text h1 {
+        font-size: 1.6rem;
+      }
+      .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+      }
+      .hero-buttons .btn-primary,
+      .hero-buttons .btn-outline {
+        width: 100%;
+        text-align: center;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .stats-grid .stat-item h3 {
+        font-size: 1.3rem;
+      }
+      .stats-grid .stat-item p {
+        font-size: 0.8rem;
+      }
+
+      .days-checkbox-group {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      }
+
+      .register-card {
+        padding: 16px 12px;
+      }
+      .register-card h1 {
+        font-size: 1.4rem;
+      }
+
+      .form-section h2 {
+        font-size: 1rem;
+        padding-left: 10px;
+      }
+
+      .field-group label {
+        font-size: 0.85rem;
+      }
+      .field-group input,
+      .field-group select,
+      .field-group textarea {
+        font-size: 0.9rem;
+        padding: 10px 12px;
+      }
+
+      .radio-group label,
+      .checkbox-group label {
+        font-size: 0.85rem;
+      }
+      .days-checkbox-group label {
+        font-size: 0.85rem;
+        padding: 6px 10px;
+      }
+
+      .register-btn {
+        font-size: 0.95rem;
+        padding: 12px;
+      }
+
+      .confirmation-card .check-icon {
+        width: 70px;
+        height: 70px;
+        line-height: 70px;
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- LANDING PAGE -->
+  <div id="landingPage" class="landing">
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="logo">Remote<span>Atelier</span></div>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#requirements">Requirements</a>
+          <a href="#" class="btn-primary join-link" style="padding: 10px 24px; font-size: 0.85rem;">Join Now</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about" class="join-link">About</a>
+      <a href="#skills" class="join-link">Skills</a>
+      <a href="#requirements" class="join-link">Requirements</a>
+      <a href="#" class="btn-primary join-link" style="text-align:center;">Join Now</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-content">
+        <div class="hero-text">
+          <div class="badge">🚀 2026 Program</div>
+          <h1>Remote Cold Calling <br /><span>Training Program</span></h1>
+          <p>Learn cold calling, develop communication, confidence, and sales skills — all designed for remote work success.</p>
+          <div class="hero-buttons">
+            <a href="#" class="btn-primary join-link">CLICK HERE TO JOIN</a>
+            <a href="#about" class="btn-outline">Learn More</a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="illustration">
+            <div class="icon-grid">
+              <div class="icon-item">📞<span>Cold Call</span></div>
+              <div class="icon-item">📅<span>Appointments</span></div>
+              <div class="icon-item">🎯<span>Lead Gen</span></div>
+              <div class="icon-item">💬<span>Sales</span></div>
+              <div class="icon-item">⭐<span>Service</span></div>
+              <div class="icon-item">💪<span>Confidence</span></div>
+            </div>
+            <p>Build skills for a remote career</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <h3>5+</h3>
+            <p>Core Skills Covered</p>
+          </div>
+          <div class="stat-item">
+            <h3>100%</h3>
+            <p>Remote Focused</p>
+          </div>
+          <div class="stat-item">
+            <h3>24/7</h3>
+            <p>Flexible Learning</p>
+          </div>
+          <div class="stat-item">
+            <h3>🎯</h3>
+            <p>Career Ready</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-header">
+          <div class="tag">About</div>
+          <h2>About the Training</h2>
+          <p>This program is built for those who want to master cold calling and build a strong foundation in remote sales communication.</p>
+        </div>
+        <div class="grid-2col">
+          <div class="feature-card">
+            <div class="icon">🎓</div>
+            <h3>Practical Learning</h3>
+            <p>You will learn practical techniques, gain confidence, and develop clarity in speaking with prospects through structured modules and real‑world scenarios.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon">🚀</div>
+            <h3>Career Transformation</h3>
+            <p>Participants leave with skills that translate directly to remote roles, opening doors to new career opportunities in sales and customer service.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section" id="skills" style="background: #f8fafc;">
+      <div class="container">
+        <div class="section-header">
+          <div class="tag">Skills</div>
+          <h2>Skills Covered</h2>
+          <p>Develop the essential skills needed for remote sales success.</p>
+        </div>
+        <div class="grid-3col">
+          <div class="feature-card" style="text-align:center;">
+            <div class="icon">📞</div>
+            <h3>Cold Calling</h3>
+            <p>Master the art of engaging prospects over the phone with confidence.</p>
+          </div>
+          <div class="feature-card" style="text-align:center;">
+            <div class="icon">📅</div>
+            <h3>Appointment Setting</h3>
+            <p>Learn to convert conversations into qualified appointments.</p>
+          </div>
+          <div class="feature-card" style="text-align:center;">
+            <div class="icon">🎯</div>
+            <h3>Lead Generation</h3>
+            <p>Identify and qualify potential customers effectively.</p>
+          </div>
+          <div class="feature-card" style="text-align:center;">
+            <div class="icon">⭐</div>
+            <h3>Customer Service</h3>
+            <p>Build lasting relationships through excellent service skills.</p>
+          </div>
+          <div class="feature-card" style="text-align:center;">
+            <div class="icon">💼</div>
+            <h3>Sales Representative</h3>
+            <p>Develop a complete sales toolkit for remote positions.</p>
+          </div>
+          <div class="feature-card" style="text-align:center;">
+            <div class="icon">💬</div>
+            <h3>Communication</h3>
+            <p>Enhance your speaking, listening, and persuasion abilities.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMUNICATION & CONFIDENCE -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <div class="tag">Growth</div>
+          <h2>Communication &amp; Confidence</h2>
+          <p>We focus on more than scripts. You'll develop the soft skills that set you apart.</p>
+        </div>
+        <div class="grid-2col">
+          <div class="feature-card">
+            <ul class="list-bullet">
+              <li>Communication &amp; active listening</li>
+              <li>Confidence and professional speaking</li>
+              <li>Clarity in messaging and value propositions</li>
+              <li>Sales mindset and resilience</li>
+              <li>Willingness to learn and adapt</li>
+            </ul>
+          </div>
+          <div class="feature-card" style="background: #f1f6fa; border-color: transparent;">
+            <div style="font-size: 4rem; text-align: center; margin-bottom: 12px;">💪</div>
+            <p style="text-align:center; font-weight:500; color:#0b2b4a;">"Confidence comes from preparation and practice. We help you build both."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REMOTE WORK -->
+    <section class="section" style="background: #f8fafc;">
+      <div class="container">
+        <div class="section-header">
+          <div class="tag">Remote</div>
+          <h2>Remote Work Focus</h2>
+          <p>This training is specifically designed for individuals aiming to build skills that open doors to remote opportunities.</p>
+        </div>
+        <div style="max-width: 700px; margin: 0 auto; text-align:center;">
+          <p style="font-size:1.05rem; color:#2c405a;">Whether you're new to remote work or looking to transition, the program equips you with the competencies employers seek in today's digital workplace.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- REQUIREMENTS -->
+    <section class="section" id="requirements">
+      <div class="container">
+        <div class="section-header">
+          <div class="tag">Equipment</div>
+          <h2>Equipment Requirements</h2>
+          <p>To participate fully — and to succeed in remote roles — you'll need access to:</p>
+        </div>
+        <div class="req-grid">
+          <div class="req-item">
+            <span class="icon">💻</span>
+            Laptop or desktop computer
+          </div>
+          <div class="req-item">
+            <span class="icon">🎧</span>
+            Noise‑cancellation headset with microphone
+          </div>
+          <div class="req-item">
+            <span class="icon">🌐</span>
+            Reliable internet connection
+          </div>
+        </div>
+        <p style="text-align:center; color:#4a5f7a; margin-top:20px; font-size:0.95rem;">These are also essential for remote job applications and interviews.</p>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="section" style="border-bottom: none; padding-bottom: 40px;">
+      <div class="container">
+        <div class="cta-final">
+          <h2>Ready to Join the Training?</h2>
+          <p>Start your journey toward remote sales success. Apply now.</p>
+          <a href="#" class="btn-primary join-link" style="background:white; color:#0b2b4a;">CLICK HERE TO JOIN</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-links">
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#requirements">Requirements</a>
+        </div>
+        <p>&copy; 2026 RemoteAtelier. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- REGISTRATION PAGE -->
+  <div id="registerPage" class="register-page">
+    <div class="container">
+      <div class="register-card">
+        <a href="#" class="btn-back" onclick="showLanding(); return false;">Back to Home</a>
+        <h1>Join the Training</h1>
+        <p class="subhead">Complete the form below to apply for the Remote Cold Calling Training Program. All fields marked with <span style="color:#dc3545;">*</span> are required.</p>
+
+        <form id="registrationForm" action="https://formsubmit.co/karibiwhite5@gmail.com" method="POST" enctype="multipart/form-data" target="_blank">
+          <input type="hidden" name="_subject" value="New Training Application">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          
+          <!-- 1. PERSONAL INFORMATION -->
+          <div class="form-section">
+            <h2>1. Personal Information</h2>
+            <div class="field-group">
+              <label>Full Name <span class="required">*</span></label>
+              <input type="text" name="Full Name" placeholder="e.g. Jane Doe" required />
+            </div>
+            <div class="field-group">
+              <label>Email Address <span class="required">*</span></label>
+              <input type="email" name="Email" placeholder="jane@example.com" required />
+            </div>
+            <div class="field-group">
+              <label>WhatsApp Number <span class="required">*</span></label>
+              <input type="tel" name="WhatsApp" placeholder="+1234567890" required />
+            </div>
+            <div class="field-group">
+              <label>LinkedIn <span class="optional">(Optional)</span></label>
+              <input type="text" name="LinkedIn" placeholder="linkedin.com/in/username" />
+            </div>
+            <div class="field-group">
+              <label>Country / City <span class="required">*</span></label>
+              <select name="Country" required>
+                <option value="">Select your country</option>
+                <option value="United States">United States</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+                <option value="Nigeria">Nigeria</option>
+                <option value="South Africa">South Africa</option>
+                <option value="India">India</option>
+                <option value="Germany">Germany</option>
+                <option value="France">France</option>
+                <option value="Spain">Spain</option>
+                <option value="Italy">Italy</option>
+                <option value="Brazil">Brazil</option>
+                <option value="Mexico">Mexico</option>
+                <option value="China">China</option>
+                <option value="Japan">Japan</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label>Age Range <span class="required">*</span></label>
+              <select name="Age Range" required>
+                <option value="">Select</option>
+                <option>18-24</option>
+                <option>25-34</option>
+                <option>35-44</option>
+                <option>45+</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 2. EXPERIENCE -->
+          <div class="form-section">
+            <h2>2. Experience</h2>
+            <div class="field-group">
+              <label>Do you have previous cold calling experience? <span class="required">*</span></label>
+              <div class="radio-group">
+                <label><input type="radio" name="Cold Calling Experience" value="Yes" required /> Yes</label>
+                <label><input type="radio" name="Cold Calling Experience" value="No" /> No</label>
+                <label><input type="radio" name="Cold Calling Experience" value="Some experience" /> Some experience</label>
+              </div>
+            </div>
+            <div class="field-group">
+              <label>Have you worked in any of these areas? <span class="required">*</span></label>
+              <div class="radio-group">
+                <label><input type="radio" name="Work Areas" value="Sales" required /> Sales</label>
+                <label><input type="radio" name="Work Areas" value="Customer Service" /> Customer Service</label>
+                <label><input type="radio" name="Work Areas" value="Telemarketing" /> Telemarketing</label>
+                <label><input type="radio" name="Work Areas" value="Appointment Setting" /> Appointment Setting</label>
+                <label><input type="radio" name="Work Areas" value="Lead Generation" /> Lead Generation</label>
+                <label><input type="radio" name="Work Areas" value="None" /> None</label>
+              </div>
+            </div>
+            <div class="field-group">
+              <label>Upload Resume <span class="required">*</span></label>
+              <div class="upload-area">
+                <input type="file" name="Resume" accept=".pdf,.doc,.docx" required />
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. EQUIPMENT & WORK SETUP -->
+          <div class="form-section">
+            <h2>3. Equipment &amp; Work Setup</h2>
+            <div class="field-group">
+              <label>Do you have access to a laptop or desktop computer? <span class="required">*</span></label>
+              <div class="radio-group">
+                <label><input type="radio" name="Laptop Access" value="Yes" required /> Yes</label>
+                <label><input type="radio" name="Laptop Access" value="No" /> No</label>
+              </div>
+            </div>
+            <div class="field-group">
+              <label>Do you have a working Noise cancellation headset with a microphone? <span class="required">*</span></label>
+              <div class="radio-group">
+                <label><input type="radio" name="Headset" value="Yes" required /> Yes</label>
+                <label><input type="radio" name="Headset" value="No" /> No</label>
+              </div>
+            </div>
+            <div class="field-group">
+              <label>Do you have a reliable internet connection? <span class="required">*</span></label>
+              <div class="radio-group">
+                <label><input type="radio" name="Internet Connection" value="Yes" required /> Yes</label>
+                <label><input type="radio" name="Internet Connection" value="No" /> No</label>
+              </div>
+            </div>
+            <div class="field-group">
+              <label>What internet connection do you normally use? <span class="required">*</span></label>
+              <div class="radio-group">
+                <label><input type="radio" name="Internet Type" value="Wi-Fi" required /> Wi-Fi</label>
+                <label><input type="radio" name="Internet Type" value="Fibre" /> Fibre</label>
+                <label><input type="radio" name="Internet Type" value="Mobile data" /> Mobile data</label>
+                <label><input type="radio" name="Internet Type" value="Other" /> Other</label>
+              </div>
+            </div>
+            <div class="inline-info">
+              <strong>Equipment &amp; Job Applications</strong>
+              You will need access to a computer, reliable internet, and a headset with microphone during the course of the training. These will also be required for applying to remote jobs and attending interviews. If you don't currently have them, are you able to gain access during the training?
+              <div class="radio-group" style="margin-top:10px;">
+                <label><input type="radio" name="Equipment Access" value="Yes, I have everything" required /> Yes, I have everything</label>
+                <label><input type="radio" name="Equipment Access" value="I have some, but can gain access to the rest" /> I have some, but can gain access to the rest</label>
+                <label><input type="radio" name="Equipment Access" value="No" /> No</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. AVAILABILITY -->
+          <div class="form-section">
+            <h2>4. Availability</h2>
+            <div class="field-group">
+              <label>How many hours can you dedicate to training each week? <span class="required">*</span></label>
+              <input type="number" name="Hours Per Week" placeholder="e.g. 10" min="1" max="168" required />
+            </div>
+            <div class="field-group">
+              <label>What days are you available? (Select all that apply) <span class="required">*</span></label>
+              <div class="days-checkbox-group">
+                <label><input type="checkbox" name="Available Days" value="Monday" /> Monday</label>
+                <label><input type="checkbox" name="Available Days" value="Tuesday" /> Tuesday</label>
+                <label><input type="checkbox" name="Available Days" value="Wednesday" /> Wednesday</label>
+                <label><input type="checkbox" name="Available Days" value="Thursday" /> Thursday</label>
+                <label><input type="checkbox" name="Available Days" value="Friday" /> Friday</label>
+                <label><input type="checkbox" name="Available Days" value="Saturday" /> Saturday</label>
+                <label><input type="checkbox" name="Available Days" value="Sunday" /> Sunday</label>
+              </div>
+            </div>
+            <div class="field-group">
+              <label>Preferred training time: <span class="required">*</span></label>
+              <div class="radio-group">
+                <label><input type="radio" name="Preferred Time" value="Morning" required /> Morning</label>
+                <label><input type="radio" name="Preferred Time" value="Afternoon" /> Afternoon</label>
+                <label><input type="radio" name="Preferred Time" value="Evening" /> Evening</label>
+              </div>
+            </div>
+            <div class="field-group">
+              <label>Are you available for remote work after completing the training? <span class="required">*</span></label>
+              <div class="radio-group">
+                <label><input type="radio" name="Remote Work Available" value="Yes" required /> Yes</label>
+                <label><input type="radio" name="Remote Work Available" value="No" /> No</label>
+              </div>
+            </div>
+            <div class="inline-info">
+              <strong>Time &amp; Availability</strong>
+              The training may include job applications and interviews. Are you flexible enough to attend training, apply for jobs, and attend interviews when opportunities come up?
+              <div class="radio-group" style="margin-top:10px;">
+                <label><input type="radio" name="Flexibility" value="Yes, I'm flexible" required /> Yes, I'm flexible</label>
+                <label><input type="radio" name="Flexibility" value="Somewhat flexible" /> Somewhat flexible</label>
+                <label><input type="radio" name="Flexibility" value="No" /> No</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. TRAINING GOALS -->
+          <div class="form-section">
+            <h2>5. Training Goals</h2>
+            <div class="field-group">
+              <label>Why do you want to learn cold calling? <span class="required">*</span></label>
+              <textarea name="Why Learn Cold Calling" rows="2" placeholder="Share your motivation..." required></textarea>
+            </div>
+            <div class="field-group">
+              <label>What type of remote job are you interested in? <span class="required">*</span></label>
+              <div class="radio-group">
+                <label><input type="radio" name="Job Interest" value="Cold Caller" required /> Cold Caller</label>
+                <label><input type="radio" name="Job Interest" value="Appointment Setter" /> Appointment Setter</label>
+                <label><input type="radio" name="Job Interest" value="Lead Generation" /> Lead Generation</label>
+                <label><input type="radio" name="Job Interest" value="Customer Service" /> Customer Service</label>
+                <label><input type="radio" name="Job Interest" value="Sales Representative" /> Sales Representative</label>
+                <label><input type="radio" name="Job Interest" value="Other" /> Other</label>
+              </div>
+            </div>
+            <div class="field-group">
+              <label>What do you hope to achieve from this training? <span class="required">*</span></label>
+              <textarea name="Goals" rows="2" placeholder="Your goals..." required></textarea>
+            </div>
+          </div>
+
+          <!-- 6. COMMUNICATION ASSESSMENT -->
+          <div class="form-section">
+            <h2>6. Communication Assessment</h2>
+            <div style="background:#f1f5f9; padding:16px 20px; border-radius:20px;">
+              <p style="font-weight:600;">Recording Instructions</p>
+              <p>Please record a 30–60 second voice note introducing yourself and explaining why you are interested in learning cold calling. Speak naturally and clearly. We are not looking for perfection—we simply want to assess your communication, confidence, clarity, and willingness to learn.</p>
+              
+              <div class="voice-note-instructions">
+                <strong>How to record your voice note:</strong>
+                <ol>
+                  <li>Go to <a href="https://vocaroo.com" target="_blank" class="vocaroo-link">Vocaroo.com</a> (opens in new tab)</li>
+                  <li>Click the "Record" button and speak for 30–60 seconds</li>
+                  <li>Preview your recording, then click "Save"</li>
+                  <li>Copy the link provided</li>
+                  <li>Paste the link in the field below</li>
+                </ol>
+              </div>
+
+              <div class="example" style="background:white; padding:14px 18px; border-radius:18px; font-size:0.9rem; color:#1a2f47; border:1px solid #dde4ec; margin:12px 0 16px; font-style:italic;">
+                <strong>Example Script:</strong> "Hello, my name is [Name], and I'm interested in joining the Remote Cold Calling Training Program..."
+              </div>
+
+              <div class="field-group">
+                <label>Paste your audio link here <span class="required">*</span></label>
+                <input type="url" name="Voice Note Link" placeholder="https://vocaroo.com/xxxxxxxxxxxxx or any audio link" required />
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. HOW DID YOU HEAR -->
+          <div class="form-section">
+            <h2>7. How did you hear about this training?</h2>
+            <div class="field-group">
+              <label>How did you hear about us? <span class="required">*</span></label>
+              <select name="How Heard" required>
+                <option value="">Select how you heard about us</option>
+                <option value="LinkedIn">LinkedIn</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Facebook">Facebook</option>
+                <option value="Twitter/X">Twitter/X</option>
+                <option value="YouTube">YouTube</option>
+                <option value="TikTok">TikTok</option>
+                <option value="Friend or Family">Friend or Family</option>
+                <option value="Colleague">Colleague</option>
+                <option value="Email Newsletter">Email Newsletter</option>
+                <option value="Online Search">Online Search</option>
+                <option value="Job Board">Job Board</option>
+                <option value="Podcast">Podcast</option>
+                <option value="Webinar">Webinar</option>
+                <option value="Event or Conference">Event or Conference</option>
+                <option value="WhatsApp Group">WhatsApp Group</option>
+                <option value="Telegram">Telegram</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="register-btn" id="submitBtn">Submit Registration</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOADING PAGE -->
+  <div id="loadingPage" class="loading-page">
+    <div class="loading-card">
+      <div class="loading-spinner"></div>
+      <h2>Submitting Your Application...</h2>
+      <p>Please wait while we process your registration.</p>
+      <div class="loading-progress">
+        <div class="loading-progress-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRMATION PAGE -->
+  <div id="confirmationPage" class="confirmation-page">
+    <div class="container">
+      <div class="confirmation-card">
+        <div class="check-icon">✓</div>
+        <h2>Registration Submitted Successfully</h2>
+        <p>Thank you for completing your registration.</p>
+        <p>Your information has been successfully submitted. Our team will review your registration and get back to you with the next steps.</p>
+        <p class="thank-you">We appreciate your interest and look forward to having you with us.</p>
+        <a href="#" class="btn-primary" onclick="showLanding(); return false;">Return to Homepage</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHATBOT -->
+  <div class="chatbot-container">
+    <button class="chatbot-toggle" id="chatbotToggle" aria-label="Toggle chat">
+      <span class="chat-icon">💬</span>
+      <span class="close-icon">✕</span>
+    </button>
+    
+    <div class="chatbot-window" id="chatbotWindow">
+      <div class="chatbot-header">
+        <h3>
+          <span class="status-dot"></span>
+          RemoteAtelier Assistant
+        </h3>
+        <button class="minimize-btn" id="minimizeChat">−</button>
+      </div>
+      
+      <div class="chatbot-messages" id="chatMessages">
+        <div class="message bot">
+          👋 Hi there! Welcome to RemoteAtelier.<br><br>
+          I'm here to help you with any questions about our Cold Calling Training Program. Feel free to ask about:
+          <ul style="margin-top:8px; padding-left:16px; list-style-type:disc;">
+            <li>Program details</li>
+            <li>Registration process</li>
+            <li>Equipment requirements</li>
+            <li>Remote work opportunities</li>
+            <li>How to upload audio</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="typing-indicator" id="typingIndicator">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      
+      <div class="quick-replies" id="quickReplies">
+        <button data-msg="Tell me more about the program">Program details</button>
+        <button data-msg="How do I register?">Registration</button>
+        <button data-msg="What equipment do I need?">Equipment</button>
+        <button data-msg="What remote jobs can I get?">Job opportunities</button>
+        <button data-msg="How do I upload my audio?">Upload audio</button>
+      </div>
+      
+      <div class="chatbot-input">
+        <input type="text" id="chatInput" placeholder="Type your message..." />
+        <button id="sendChat">➤</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    // ---- MOBILE MENU ----
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    if (hamburger) {
+      hamburger.addEventListener('click', function() {
+        this.classList.toggle('active');
+        mobileMenu.classList.toggle('open');
+      });
+    }
+
+    if (mobileMenu) {
+      document.querySelectorAll('.mobile-menu a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          hamburger.classList.remove('active');
+          mobileMenu.classList.remove('open');
+        });
+      });
+    }
+
+    // ---- PAGE ROUTING ----
+    function showLanding() {
+      document.getElementById('landingPage').style.display = 'block';
+      document.getElementById('registerPage').style.display = 'none';
+      document.getElementById('loadingPage').style.display = 'none';
+      document.getElementById('confirmationPage').style.display = 'none';
+      window.history.pushState({}, '', '/');
+    }
+
+    function showRegister() {
+      document.getElementById('landingPage').style.display = 'none';
+      document.getElementById('registerPage').style.display = 'block';
+      document.getElementById('loadingPage').style.display = 'none';
+      document.getElementById('confirmationPage').style.display = 'none';
+      window.history.pushState({}, '', '/join');
+    }
+
+    function showLoading() {
+      document.getElementById('landingPage').style.display = 'none';
+      document.getElementById('registerPage').style.display = 'none';
+      document.getElementById('loadingPage').style.display = 'flex';
+      document.getElementById('confirmationPage').style.display = 'none';
+    }
+
+    function showConfirmation() {
+      document.getElementById('landingPage').style.display = 'none';
+      document.getElementById('registerPage').style.display = 'none';
+      document.getElementById('loadingPage').style.display = 'none';
+      document.getElementById('confirmationPage').style.display = 'flex';
+      window.history.pushState({}, '', '/confirmation');
+    }
+
+    document.querySelectorAll('.join-link').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        showRegister();
+        if (hamburger) {
+          hamburger.classList.remove('active');
+          mobileMenu.classList.remove('open');
+        }
+      });
+    });
+
+    window.addEventListener('popstate', function() {
+      var path = window.location.pathname;
+      if (path.endsWith('/join')) {
+        showRegister();
+      } else if (path.endsWith('/confirmation')) {
+        showConfirmation();
+      } else {
+        showLanding();
+      }
+    });
+
+    // ---- FORM SUBMISSION WITH VALIDATION ----
+    var form = document.getElementById('registrationForm');
+    var submitBtn = document.getElementById('submitBtn');
+
+    function validateRadioGroup(group) {
+      var radios = group.querySelectorAll('input[type="radio"]');
+      var isChecked = false;
+      radios.forEach(function(radio) {
+        if (radio.checked) isChecked = true;
+      });
+      return isChecked;
+    }
+
+    function validateCheckboxGroup(group) {
+      var checkboxes = group.querySelectorAll('input[type="checkbox"]');
+      var isChecked = false;
+      checkboxes.forEach(function(cb) {
+        if (cb.checked) isChecked = true;
+      });
+      return isChecked;
+    }
+
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        var isValid = true;
+        var errorMessage = '';
+
+        var requiredInputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+        requiredInputs.forEach(function(input) {
+          if (input.type === 'radio' || input.type === 'checkbox') return;
+          
+          if (!input.value || input.value.trim() === '') {
+            isValid = false;
+            input.style.borderColor = '#dc3545';
+            errorMessage = 'Please fill in all required fields.';
+          } else {
+            input.style.borderColor = '#28a745';
+          }
+        });
+
+        var radioGroups = form.querySelectorAll('.radio-group');
+        radioGroups.forEach(function(group) {
+          if (!validateRadioGroup(group)) {
+            isValid = false;
+            errorMessage = 'Please select an option for all required fields.';
+            group.style.outline = '2px solid #dc3545';
+            group.style.outlineOffset = '4px';
+            group.style.borderRadius = '8px';
+            group.style.padding = '4px';
+          } else {
+            group.style.outline = 'none';
+            group.style.padding = '0';
+          }
+        });
+
+        var checkboxGroups = form.querySelectorAll('.days-checkbox-group');
+        checkboxGroups.forEach(function(group) {
+          if (!validateCheckboxGroup(group)) {
+            isValid = false;
+            errorMessage = 'Please select at least one day for availability.';
+            group.style.outline = '2px solid #dc3545';
+            group.style.outlineOffset = '4px';
+            group.style.borderRadius = '8px';
+            group.style.padding = '4px';
+          } else {
+            group.style.outline = 'none';
+            group.style.padding = '0';
+          }
+        });
+
+        var fileInputs = form.querySelectorAll('input[type="file"][required]');
+        fileInputs.forEach(function(input) {
+          if (!input.files || input.files.length === 0) {
+            isValid = false;
+            input.parentElement.style.borderColor = '#dc3545';
+            errorMessage = 'Please upload your resume.';
+          } else {
+            input.parentElement.style.borderColor = '#28a745';
+          }
+        });
+
+        var voiceNoteInput = form.querySelector('input[name="Voice Note Link"]');
+        if (voiceNoteInput) {
+          if (!voiceNoteInput.value || voiceNoteInput.value.trim() === '') {
+            isValid = false;
+            voiceNoteInput.style.borderColor = '#dc3545';
+            errorMessage = 'Please paste your audio link.';
+          } else {
+            voiceNoteInput.style.borderColor = '#28a745';
+          }
+        }
+
+        if (!isValid) {
+          alert(errorMessage || 'Please fill in all required fields.');
+          return;
+        }
+
+        showLoading();
+        
+        submitBtn.innerHTML = '<span class="spinner"></span> Submitting...';
+        submitBtn.classList.add('btn-loading');
+        submitBtn.disabled = true;
+
+        var formData = new FormData(form);
+        
+        fetch('https://formsubmit.co/karibiwhite5@gmail.com', {
+          method: 'POST',
+          mode: 'no-cors',
+          body: formData
+        })
+        .then(function() {
+          setTimeout(function() {
+            showConfirmation();
+            form.reset();
+            submitBtn.innerHTML = 'Submit Registration';
+            submitBtn.classList.remove('btn-loading');
+            submitBtn.disabled = false;
+          }, 5000);
+        })
+        .catch(function() {
+          var iframe = document.createElement('iframe');
+          iframe.name = 'hidden-form-submit';
+          iframe.style.display = 'none';
+          document.body.appendChild(iframe);
+          
+          form.target = 'hidden-form-submit';
+          form.submit();
+          
+          setTimeout(function() {
+            showConfirmation();
+            form.reset();
+            submitBtn.innerHTML = 'Submit Registration';
+            submitBtn.classList.remove('btn-loading');
+            submitBtn.disabled = false;
+            document.body.removeChild(iframe);
+          }, 5000);
+        });
+      });
+    }
+
+    document.querySelectorAll('input, select, textarea').forEach(function(el) {
+      el.addEventListener('focus', function() {
+        this.style.borderColor = '#d0d9e5';
+        var radioGroup = this.closest('.radio-group');
+        if (radioGroup) {
+          radioGroup.style.outline = 'none';
+          radioGroup.style.padding = '0';
+        }
+        var checkboxGroup = this.closest('.days-checkbox-group');
+        if (checkboxGroup) {
+          checkboxGroup.style.outline = 'none';
+          checkboxGroup.style.padding = '0';
+        }
+        var uploadArea = this.closest('.upload-area');
+        if (uploadArea) {
+          uploadArea.style.borderColor = '#cdd7e3';
+        }
+      });
+    });
+
+    // ---- CHATBOT LOGIC ----
+    var chatbotToggle = document.getElementById('chatbotToggle');
+    var chatbotWindow = document.getElementById('chatbotWindow');
+    var chatMessages = document.getElementById('chatMessages');
+    var chatInput = document.getElementById('chatInput');
+    var sendBtn = document.getElementById('sendChat');
+    var typingIndicator = document.getElementById('typingIndicator');
+    var minimizeBtn = document.getElementById('minimizeChat');
+
+    var isOpen = false;
+
+    if (chatbotToggle) {
+      chatbotToggle.addEventListener('click', function() {
+        isOpen = !isOpen;
+        this.classList.toggle('active');
+        chatbotWindow.classList.toggle('open');
+        if (isOpen) {
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+      });
+    }
+
+    if (minimizeBtn) {
+      minimizeBtn.addEventListener('click', function() {
+        isOpen = false;
+        chatbotToggle.classList.remove('active');
+        chatbotWindow.classList.remove('open');
+      });
+    }
+
+    // Quick reply buttons
+    document.querySelectorAll('.quick-replies button').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var msg = this.dataset.msg;
+        sendMessage(msg);
+      });
+    });
+
+    function sendMessage(message) {
+      if (!message || !message.trim()) return;
+      
+      // Add user message
+      addMessage('user', message);
+      if (chatInput) chatInput.value = '';
+      
+      // Show typing indicator
+      if (typingIndicator) typingIndicator.classList.add('show');
+      if (chatMessages) chatMessages.scrollTop = chatMessages.scrollHeight;
+      
+      // Simulate bot response
+      setTimeout(function() {
+        if (typingIndicator) typingIndicator.classList.remove('show');
+        var response = getBotResponse(message);
+        addMessage('bot', response);
+        if (chatMessages) chatMessages.scrollTop = chatMessages.scrollHeight;
+      }, 800 + Math.random() * 600);
+    }
+
+    function addMessage(type, text) {
+      if (!chatMessages) return;
+      var div = document.createElement('div');
+      div.className = 'message ' + type;
+      div.innerHTML = text;
+      chatMessages.appendChild(div);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function getBotResponse(message) {
+      var msg = message.toLowerCase();
+      
+      // Audio upload question
+      if (msg.includes('audio') || msg.includes('upload') || msg.includes('record') || msg.includes('voice') || msg.includes('vocaroo') || msg.includes('link')) {
+        return '🎤 Great question! Here\'s how to upload your audio:<br><br>' +
+        '<strong>Option 1 - Vocaroo:</strong><br>' +
+        '<strong>Step 1:</strong> Go to <a href="https://vocaroo.com" target="_blank" style="color:#0b2b4a; font-weight:600;">Vocaroo.com</a><br>' +
+        '<strong>Step 2:</strong> Click the red "Record" button and speak for 30–60 seconds<br>' +
+        '<strong>Step 3:</strong> Preview your recording, then click "Save"<br>' +
+        '<strong>Step 4:</strong> Copy the link (e.g., https://vocaroo.com/xxxxxxxxxxxxx)<br>' +
+        '<strong>Step 5:</strong> Paste the link in the "Paste your audio link here" field on the registration form<br><br>' +
+        '<strong>Option 2 - Any other platform:</strong><br>' +
+        'You can also use Google Drive, Dropbox, or any other audio hosting service. Just paste the shareable link in the form.<br><br>' +
+        '📝 <strong>Example Script:</strong><br>' +
+        '"Hello, my name is [Your Name], and I\'m interested in joining the Remote Cold Calling Training Program..."';
+      }
+      
+      // Program details
+      if (msg.includes('program') || msg.includes('training') || msg.includes('about') || msg.includes('tell me')) {
+        return '📚 Our Remote Cold Calling Training Program is designed to help you master cold calling and develop strong communication, confidence, and sales skills for remote work.<br><br>' +
+        'We cover:<br>' +
+        '• Cold Calling techniques<br>' +
+        '• Appointment Setting<br>' +
+        '• Lead Generation<br>' +
+        '• Customer Service<br>' +
+        '• Sales Representative skills<br><br>' +
+        'Ready to join? Click the "JOIN NOW" button on our homepage! 🚀';
+      }
+      
+      // Registration
+      if (msg.includes('register') || msg.includes('apply') || msg.includes('join') || msg.includes('sign up')) {
+        return '📝 To register for the program, simply click the "CLICK HERE TO JOIN" or "JOIN NOW" button on our homepage.<br><br>' +
+        'You\'ll need to fill out a registration form with your personal information, experience, equipment setup, and availability.<br><br>' +
+        'After submitting, our team will review your application and get back to you within 2-3 business days.';
+      }
+      
+      // Equipment
+      if (msg.includes('equipment') || msg.includes('need') || msg.includes('headset') || msg.includes('computer') || msg.includes('internet')) {
+        return '💻 To participate in the training, you\'ll need:<br><br>' +
+        '✅ Laptop or desktop computer<br>' +
+        '✅ Noise-cancellation headset with microphone<br>' +
+        '✅ Reliable internet connection<br><br>' +
+        'These are also essential for remote job applications and interviews. If you don\'t have everything now, you can gain access during the training.';
+      }
+      
+      // Jobs / remote work / opportunities
+      if (msg.includes('job') || msg.includes('work') || msg.includes('career') || msg.includes('opportunity')) {
+        return '💼 After completing the training, you\'ll be prepared for various remote roles including:<br><br>' +
+        '• Cold Caller<br>' +
+        '• Appointment Setter<br>' +
+        '• Lead Generation Specialist<br>' +
+        '• Customer Service Representative<br>' +
+        '• Sales Representative<br><br>' +
+        'Our program focuses on building skills that employers are actively looking for in remote positions.';
+      }
+
+      // Hello / Hi
+      if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey')) {
+        return '👋 Hello! Welcome to RemoteAtelier. How can I help you today? Feel free to ask about our program, registration process, equipment requirements, or career opportunities!';
+      }
+
+      // Thank you
+      if (msg.includes('thank')) {
+        return '😊 You\'re welcome! I\'m happy to help. Do you have any other questions about our program?';
+      }
+      
+      // Default responses
+      var responses = [
+        'Great question! 😊 I\'d recommend checking out our "About" section on the homepage for more details. Or you can click "JOIN NOW" to start your application!',
+        'Thanks for reaching out! 💪 Our training program is designed to build confidence and practical skills for remote sales roles. Want to know more about a specific area?',
+        'I\'m here to help! 🎯 Feel free to ask me about the program, registration process, equipment requirements, or career opportunities.',
+        'That\'s a great question! 📞 Our program covers cold calling, appointment setting, lead generation, and more. Would you like me to share more details about any specific skill?',
+        'Let me help you with that! 💼 Our training focuses on real-world skills that employers are looking for in remote sales positions. What would you like to know more about?'
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];
+    }
+
+    if (sendBtn) {
+      sendBtn.addEventListener('click', function() {
+        sendMessage(chatInput.value);
+      });
+    }
+
+    if (chatInput) {
+      chatInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          sendMessage(chatInput.value);
+        }
+      });
+    }
+
+    // Close chat when clicking outside
+    document.addEventListener('click', function(e) {
+      if (isOpen && chatbotWindow && chatbotToggle && !chatbotWindow.contains(e.target) && !chatbotToggle.contains(e.target)) {
+        isOpen = false;
+        chatbotToggle.classList.remove('active');
+        chatbotWindow.classList.remove('open');
+      }
+    });
+
+    // Initial state
+    if (window.location.pathname.endsWith('/join')) {
+      showRegister();
+    } else if (window.location.pathname.endsWith('/confirmation')) {
+      showConfirmation();
+    } else {
+      showLanding();
+    }
+  </script>
+</body>
+</html>
